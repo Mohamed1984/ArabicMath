@@ -1,0 +1,219 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ViewModel="clr-namespace:MathEditor.ViewModel"
+    x:Name="userWindow" x:Class="MathEditor.MainWindow"
+    mc:Ignorable="d"  FlowDirection="RightToLeft"
+    Width="1000" FontSize="16" FontWeight="Bold" DataContext="{DynamicResource viewModel}" Icon="media/toolbarphotos/math.png" Title="المحرر الرياضي" WindowStartupLocation="CenterScreen" Language="ar-sa">
+    <Window.Resources>
+        <ResourceDictionary>
+
+
+            <DataTemplate x:Key="QuickAccessListItemTemplate">
+                <Border BorderThickness="2" BorderBrush="SkyBlue" CornerRadius="4" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                        <Border Grid.ColumnSpan="2" Grid.Row="1" Margin="0,4,0,0" MouseLeftButtonUp="InsertQuickAccessSymbol_Click">
+                        <Border.Child>
+                            <TextBlock Text="{Binding }"  FontWeight="Bold" HorizontalAlignment="Center"  ></TextBlock>
+                        </Border.Child>
+                    </Border>
+                    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding Converter={StaticResource QuickAccessSymbolToIndexConverter}, StringFormat=Ctrl+F\{0\}}" FontSize="10"></TextBlock>
+                    
+                    <Path Data="M0,0 L24,0 L24,22 L0,22 z" Stretch="Fill" UseLayoutRounding="False" MouseLeftButtonUp="RemoveQuickAccessChar_Click" StrokeThickness="2">
+                        <Path.Fill>
+                            <RadialGradientBrush>
+                                <GradientStop Color="#FFD2ADAD" Offset="0.107"/>
+                                <GradientStop Color="#FFBE2828" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Path.Fill>
+                    </Path>
+                    <Path Data="M0,0 L17.5,14.688 M17.5,0 L0,14.688" Stretch="Fill" UseLayoutRounding="False" StrokeThickness="2" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1" Fill="Black" MouseLeftButtonUp="RemoveQuickAccessChar_Click"/>
+                </Grid>
+                </Border>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+
+    <Grid x:Name="LayoutRoot" Background="White"  >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+
+        <Border Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="{StaticResource ToolbarBorder}" BorderThickness="1" Background="{StaticResource ToolbarBackground}" CornerRadius="7" Margin="4,0">
+            <StackPanel Orientation="Horizontal">
+                <ComboBox Width="75" Margin="8" ItemsSource="{Binding AlgebraOperators}" SelectedIndex="{Binding SelectedAlgebraOperatorIndex, Mode=TwoWay}" DropDownClosed="InsertAlgebraOp_Click"></ComboBox>
+
+                <ComboBox Width="75" Margin="8" ItemsSource="{Binding RelationalOperators}" SelectedIndex="{Binding SelectedRelationalOperatorIndex, Mode=TwoWay}" DropDownClosed="InsertRelationalOp_Click"></ComboBox>
+
+                <ComboBox Width="75" Margin="8" ItemsSource="{Binding CalculusOperators}" SelectedIndex="{Binding SelectedCalculusOperatorIndex, Mode=TwoWay}" DropDownClosed="InsertCalculusOp_Click"></ComboBox>
+
+                <ComboBox Width="75" Margin="8" ItemsSource="{Binding EqualityOperators}" SelectedIndex="{Binding SelectedEqualityOperatorIndex, Mode=TwoWay}" DropDownClosed="InsertEquality_Click"></ComboBox>
+
+                <ComboBox Width="75" Margin="8" ItemsSource="{Binding GroupOperators}" SelectedIndex="{Binding SelectedGroupOperatorIndex, Mode=TwoWay}" DropDownClosed="InsertGroupOp_Click"></ComboBox>
+
+                <ComboBox Width="75" Margin="8" ItemsSource="{Binding OverDownScripts}" SelectedIndex="{Binding SelectedOverDownScriptIndex, Mode=TwoWay}" DropDownClosed="InsertOverDownOp_Click"></ComboBox>
+
+                <ComboBox Width="75" Margin="8" ItemsSource="{Binding ProofOperators}" SelectedIndex="{Binding SelectedProofOperatorIndex, Mode=TwoWay}" DropDownClosed="InsertProofOp_Click"></ComboBox>
+
+                <ComboBox Width="75" Margin="8" SelectedIndex="{Binding SelectedSpecialSymbolIndex, Mode=TwoWay}" ItemsSource="{Binding SpecialSymbols}" DropDownClosed="InsertSpecialSymbolOp_Click"></ComboBox>
+
+
+            </StackPanel>
+        </Border>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="2">
+
+            <Border  BorderBrush="{StaticResource ToolbarBorder}" BorderThickness="1" Background="{StaticResource ToolbarBackground}" CornerRadius="7" Margin="4,0" >
+                <ListBox x:Name="quickAccessList" ItemTemplate="{StaticResource QuickAccessListItemTemplate}" ItemsSource="{Binding QuickAccessChars}" Style="{StaticResource QuickAccessListTemplate}" SelectedIndex="{Binding SelectedQuickAccessIndex, Mode=TwoWay}" FontSize="21.333"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+            </Border>
+
+            <Border BorderBrush="{StaticResource ToolbarBorder}" BorderThickness="1" Background="{StaticResource ToolbarBackground}" CornerRadius="7" Margin="4,0" MaxWidth="200">
+                <CheckBox FontSize="16" IsChecked="{Binding IsQuickAccessSetMode, Mode=TwoWay}" VerticalAlignment="Center">
+                    <CheckBox.Content>
+                        <TextBlock TextWrapping="Wrap" Text="إضافة الرموز لشريط الوصول السريع" ></TextBlock>
+                    </CheckBox.Content>
+                </CheckBox>
+            </Border>
+        </StackPanel>
+
+        <TextBox  Grid.Column="0" Grid.Row="2" x:Name="UserTextTxt" TextWrapping="NoWrap" FontSize="22" KeyDown="UserTextTxt_KeyDown" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Text="{Binding MathText, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="UserTextTxt_SelectionChanged" MinHeight="200" Padding="10" FontFamily="Arial" />
+        <GridSplitter Grid.Column="1" Grid.Row="2" Width="4" Background="#FF6C6868" HorizontalAlignment="Left"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="2" Margin="4">
+            <StackPanel Orientation="Vertical">
+                <ToolBar>
+                    <Button Click="Compile_Click">
+                        <Button.Content>
+                            <StackPanel>
+
+                                <Image Source="media/toolbarphotos/compile.png" Width="64" Height="64"></Image>
+                                <TextBlock TextAlignment="Center">ترجمة</TextBlock>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Separator></Separator>
+                    <Button Click="Copy_Click">
+                        <Button.Content>
+                            <StackPanel>
+                                <Image Source="media/toolbarphotos/copy.png" Width="64" Height="64"></Image>
+                                <TextBlock TextAlignment="Center">نسخ</TextBlock>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Separator></Separator>
+                    <Button Click="Save_Click">
+                        <Button.Content>
+                            <StackPanel>
+
+                                <Image Source="media/toolbarphotos/save.png" Width="64" Height="64"></Image>
+                                <TextBlock TextAlignment="Center">حفظ كصورة</TextBlock>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Separator></Separator>
+                    <Button Click="Options_Click">
+                        <Button.Content>
+                            <StackPanel>
+                                <Image Source="media/toolbarphotos/settings.png" Width="64" Height="64"></Image>
+                                <TextBlock TextAlignment="Center">خيارات</TextBlock>
+
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <!--<Button Content="Test" Click="Test_Click">
+
+                    </Button>-->
+                </ToolBar>
+
+                <Image Stretch="None" Margin="8">
+                    <Image.Source>
+                        <DrawingImage Drawing="{Binding ResultImage,Mode=OneWay}" />
+                    </Image.Source>
+                </Image>
+            </StackPanel>
+        </ScrollViewer>
+
+        <GridSplitter Background="#FF6C6868" Grid.Row="3" HorizontalAlignment="Stretch" Height="4" Grid.ColumnSpan="3"/>
+        <TabControl Grid.Row="4" Grid.ColumnSpan="2" x:Name="ErrorPanel" Margin="0">
+            <TabItem x:Name="ErrorTab" Header="الأخطاء" FontSize="16">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid ItemsSource="{Binding Errors}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn    DisplayIndex="0"   Header="رقم السطر" IsReadOnly="True"  Binding="{Binding LineNumber}"/>
+                            <DataGridTextColumn    DisplayIndex="1"  Header="رسالة الخطأ" IsReadOnly="True"  Binding="{Binding Message}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="WarningTab" Header="التحذيرات" FontSize="16">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid ItemsSource="{Binding Warnings}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn    DisplayIndex="0"   Header="رقم السطر" IsReadOnly="True"  Binding="{Binding LineNumber}"/>
+                            <DataGridTextColumn    DisplayIndex="1"  Header="رسالة الخطأ" IsReadOnly="True"  Binding="{Binding Message}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="InfoTab" Header="التنبيهات" FontSize="16" Margin="0,0,0,3">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid ItemsSource="{Binding Infos}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn    DisplayIndex="0"   Header="رقم السطر" IsReadOnly="True"  Binding="{Binding LineNumber}"/>
+                            <DataGridTextColumn    DisplayIndex="1"  Header="رسالة الخطأ" IsReadOnly="True"  Binding="{Binding Message}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <StackPanel Grid.Row="5" Grid.ColumnSpan="2" x:Name="StatusBar" Orientation="Horizontal" Background="#FFA0BAAF">
+            <Border BorderBrush="#FF494242" BorderThickness="1" Width="100">
+                <TextBlock TextWrapping="Wrap" Text="رقم السطر" FontSize="16" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border BorderBrush="#FF494242" BorderThickness="1" Width="100">
+                <TextBlock x:Name="LineNumberTxt" TextWrapping="Wrap" FontSize="16" FontFamily="Arial" Text="{Binding EditorLineNumber}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border BorderBrush="#FF494242" BorderThickness="1" Width="100">
+                <TextBlock TextWrapping="Wrap" Text="العمود" FontSize="16" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border BorderBrush="#FF494242" BorderThickness="1" Width="100">
+                <TextBlock x:Name="ColumnNumberTxt" TextWrapping="Wrap" FontSize="16" FontFamily="Arial" Text="{Binding EditorColNumber}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <Border BorderBrush="#FF494242" BorderThickness="1" >
+                <TextBlock TextWrapping="Wrap" FontSize="16" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center" Text="خطأ" Foreground="#FFFF2300" Visibility="{Binding ErrorFlag, Converter={StaticResource VisibilityValueConverter}}"/>
+            </Border>
+            <Border BorderBrush="#FF494242" BorderThickness="1" >
+                <TextBlock TextWrapping="NoWrap"  FontSize="16" FontFamily="Arial" Text="{Binding ErrorMessage}" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ErrorFlag, Converter={StaticResource VisibilityValueConverter}}"/>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>

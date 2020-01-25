@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{07FE3CD5-6EA7-49CA-8EF2-1B43E14A6EC8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MathEditor</RootNamespace>
+    <AssemblyName>MathEditor</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>E:\Pub\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <TargetCulture>ar</TargetCulture>
+    <ProductName>الرياضيات العربية</ProductName>
+    <PublisherName>Arabic Tools</PublisherName>
+    <SuiteName>الرياضيات العربية</SuiteName>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <BootstrapperComponentsLocation>Relative</BootstrapperComponentsLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>C8F9850BB0992F7A66465265C6CEA0838A184D89</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>MathEditor_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>math.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.7.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Converters\QuickAccessSymbolToIndexConverter.cs" />
+    <Compile Include="Converters\VisibilityValueConverter.cs" />
+    <Compile Include="Environment.cs" />
+    <Compile Include="Options.xaml.cs">
+      <DependentUpon>Options.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Parser\P6_Expressions.cs" />
+    <Compile Include="TextTemplates\SVGTemplateCode.cs" />
+    <Compile Include="TextTemplates\SVGTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SVGTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\EditorViewModel.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Elements\AlignStatement.cs" />
+    <Compile Include="Elements\ClosedIntegralStatement.cs" />
+    <Compile Include="Elements\Division.cs" />
+    <Compile Include="Elements\DoubleIntegralStatement.cs" />
+    <Compile Include="Elements\DoubleScript.cs" />
+    <Compile Include="Elements\DownScript.cs" />
+    <Compile Include="Elements\ErrorMessage.cs" />
+    <Compile Include="Elements\FactorialStatement.cs" />
+    <Compile Include="Elements\FormatStyle.cs" />
+    <Compile Include="Elements\IntegralStatement.cs" />
+    <Compile Include="Elements\Interpreter.cs" />
+    <Compile Include="Elements\LeftDoubleScript.cs" />
+    <Compile Include="Elements\LeftSubScript.cs" />
+    <Compile Include="Elements\LeftSuperScript.cs" />
+    <Compile Include="Elements\LineBranchStatement.cs" />
+    <Compile Include="Elements\MathStyle.cs" />
+    <Compile Include="Elements\MirrorStatement.cs" />
+    <Compile Include="Elements\MultiLineStatement.cs" />
+    <Compile Include="Elements\OverDownScript.cs" />
+    <Compile Include="Elements\OverScript.cs" />
+    <Compile Include="Elements\RightDoubleScript.cs" />
+    <Compile Include="Elements\RightSubScript.cs" />
+    <Compile Include="Elements\RightSuperScript.cs" />
+    <Compile Include="Elements\Root.cs" />
+    <Compile Include="Elements\Script.cs" />
+    <Compile Include="Elements\SequenceStatement.cs" />
+    <Compile Include="Elements\Statement.cs" />
+    <Compile Include="Elements\StatementTypes.cs" />
+    <Compile Include="Elements\StringStatement.cs" />
+    <Compile Include="Elements\SubScript.cs" />
+    <Compile Include="Elements\SummationStatement.cs" />
+    <Compile Include="Elements\SuperScript.cs" />
+    <Compile Include="Elements\TextStatement.cs" />
+    <Compile Include="Elements\TextStyle.cs" />
+    <Compile Include="Elements\TripleIntegralStatement.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Options.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Parser\ActionTable.cs" />
+    <Compile Include="Parser\DiGraph.cs" />
+    <Compile Include="Parser\DiGraphAsList.cs" />
+    <Compile Include="Parser\Edge.cs" />
+    <Compile Include="Parser\EnvironmentBase.cs" />
+    <Compile Include="Parser\GotoTable.cs" />
+    <Compile Include="Parser\Graph.cs" />
+    <Compile Include="Parser\GraphAsList.cs" />
+    <Compile Include="Parser\GraphException.cs" />
+    <Compile Include="Parser\LexicalAnalyzer.cs" />
+    <Compile Include="Parser\NonTerminal.cs" />
+    <Compile Include="Parser\N_Equation.cs" />
+    <Compile Include="Parser\N_Equations.cs" />
+    <Compile Include="Parser\N_Expression.cs" />
+    <Compile Include="Parser\N_Expressions.cs" />
+    <Compile Include="Parser\N_Goal.cs" />
+    <Compile Include="Parser\N_MathTextContent.cs" />
+    <Compile Include="Parser\P10_Expression.cs" />
+    <Compile Include="Parser\P11_Expression.cs" />
+    <Compile Include="Parser\P12_Expression.cs" />
+    <Compile Include="Parser\P13_Expression.cs" />
+    <Compile Include="Parser\P14_Expression.cs" />
+    <Compile Include="Parser\P15_Expression.cs" />
+    <Compile Include="Parser\P16_Expression.cs" />
+    <Compile Include="Parser\P17_Expression.cs" />
+    <Compile Include="Parser\P18_Expression.cs" />
+    <Compile Include="Parser\P19_Expression.cs" />
+    <Compile Include="Parser\P1_Equations.cs" />
+    <Compile Include="Parser\P1_Expression.cs" />
+    <Compile Include="Parser\P1_Expressions.cs" />
+    <Compile Include="Parser\P1_MathTextContent.cs" />
+    <Compile Include="Parser\P20_Expression.cs" />
+    <Compile Include="Parser\P21_Expression.cs" />
+    <Compile Include="Parser\P22_Expression.cs" />
+    <Compile Include="Parser\P23_Expression.cs" />
+    <Compile Include="Parser\P24_Expression.cs" />
+    <Compile Include="Parser\P2_Expression.cs" />
+    <Compile Include="Parser\P2_Expressions.cs" />
+    <Compile Include="Parser\P3_Expression.cs" />
+    <Compile Include="Parser\P3_Expressions.cs" />
+    <Compile Include="Parser\P4_Expression.cs" />
+    <Compile Include="Parser\P4_Expressions.cs" />
+    <Compile Include="Parser\P5_Expression.cs" />
+    <Compile Include="Parser\P5_Expressions.cs" />
+    <Compile Include="Parser\P6_Expression.cs" />
+    <Compile Include="Parser\P7_Expression.cs" />
+    <Compile Include="Parser\P8_Expression.cs" />
+    <Compile Include="Parser\P9_Expression.cs" />
+    <Compile Include="Parser\ParseElement.cs" />
+    <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Parser\P_Equation.cs" />
+    <Compile Include="Parser\P_Equations.cs" />
+    <Compile Include="Parser\P_Expression.cs" />
+    <Compile Include="Parser\P_Expressions.cs" />
+    <Compile Include="Parser\P_Goal.cs" />
+    <Compile Include="Parser\P_MathTextContent.cs" />
+    <Compile Include="Parser\SyntaxAnalyzer.cs" />
+    <Compile Include="Parser\Terminal.cs" />
+    <Compile Include="Parser\Vertex.cs" />
+    <Compile Include="Parser\Visitor.cs" />
+    <Compile Include="Parser\WeightedEdge.cs" />
+    <Compile Include="Parser\WeightedVertex.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\toolbarphotos\109_allannotations_complete_32x32_72.png" />
+    <Resource Include="media\toolbarphotos\addreference.png" />
+    <Resource Include="media\toolbarphotos\citation.png" />
+    <Resource Include="media\toolbarphotos\datagrid.png" />
+    <Resource Include="media\toolbarphotos\hyperlink.png" />
+    <Resource Include="media\toolbarphotos\image.png" />
+    <Resource Include="media\toolbarphotos\listbullet.png" />
+    <Resource Include="media\toolbarphotos\listnumbered.png" />
+    <Resource Include="media\toolbarphotos\reftable.png" />
+    <Resource Include="media\toolbarphotos\savehh.bmp" />
+    <Resource Include="media\toolbarphotos\tableofcontents.png" />
+    <Resource Include="media\toolbarphotos\table_style1.png" />
+    <Resource Include="media\toolbarphotos\table_style2.png" />
+    <Resource Include="media\toolbarphotos\table_style3.png" />
+    <Resource Include="media\toolbarphotos\table_style4.png" />
+    <Resource Include="media\toolbarphotos\view.png" />
+    <Resource Include="media\toolbarphotos\vocab.png" />
+    <Resource Include="media\toolbarphotos\compile.png" />
+    <Resource Include="media\toolbarphotos\copy.png" />
+    <Resource Include="media\toolbarphotos\math.png" />
+    <Resource Include="media\toolbarphotos\save.png" />
+    <Resource Include="media\toolbarphotos\settings.png" />
+    <Resource Include="math.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TextTemplates\SVGTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>SVGTemplate.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

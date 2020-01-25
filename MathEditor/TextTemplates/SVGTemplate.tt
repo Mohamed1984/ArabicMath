@@ -1,0 +1,22 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="<#=Width#>"
+   height="<#=Height#>"
+   viewBox="<#=Left#> <#=Top#> <#=Width#> <#=Height#>"
+   id="svgImage"
+   style="vertical-align:<#=ImageVerticalAlign#>;"
+   version="1.0">
+  <g>
+    <path style="fill:#<#=FillColorText#>"
+       id="flowRoot1882"
+       d="<#=Data#>" />
+  </g>
+</svg>
+
